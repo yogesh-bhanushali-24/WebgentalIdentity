@@ -55,7 +55,7 @@ namespace WebgentalIdentity.Repository
             if (result.Succeeded)
             {
                 await createrole();
-                await _userManager.AddToRoleAsync(user, "ADMIN");
+                await _userManager.AddToRoleAsync(user, "CUSTOMER");
                 await GenerateEmailConfirmationTokenAsync(user);
             }
            return result;
@@ -158,8 +158,8 @@ namespace WebgentalIdentity.Repository
         {
             IdentityRole identityRole = new IdentityRole
             {
-                Name = "ADMIN",
-                NormalizedName = "ADMIN"
+                Name = "CUSTOMER",
+                NormalizedName = "CUSTOMER"
             };
 
             IdentityResult result = await _roleManager.CreateAsync(identityRole);
