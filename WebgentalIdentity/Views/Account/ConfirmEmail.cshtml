@@ -1,0 +1,47 @@
+﻿@model EmailConfirmModel
+
+@{
+    ViewData["Title"] = "ConfirmEmail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ConfirmEmail</h1>
+<div class="row text-center">
+    <div class="col-md-4">
+
+        @if (Model.Emailverified == true)
+        {
+            <div class="alert alert-success" role="alert">
+                <p>your email has been verified successfully</p>
+            </div>
+
+        }
+        else
+        {
+            if (Model.EmailSent)
+            {
+                <p>Email sent on your register email id</p>
+            }
+
+            else
+            {
+                <p>We have sent on your email id.click on the link to login</p>
+            }
+                <form asp-action="ConfirmEmail">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Email" />
+
+                    <p>Did not get any email of delete by mistake?</p>
+                    <div class="form-group">
+                        <input type="submit" value="resend confirmation Email" class="btn btn-primary" />
+
+                    </div>
+                </form>
+           
+        }
+
+
+    </div>
+
+</div>
+
