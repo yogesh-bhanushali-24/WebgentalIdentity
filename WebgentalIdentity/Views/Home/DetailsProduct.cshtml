@@ -1,0 +1,166 @@
+﻿@model WebgentalIdentity.Models.Product
+
+
+@{
+    ViewData["Title"] = "DetailsProduct";
+}
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>*@
+<style>
+@* body {
+font-family: 'Roboto Condensed', sans-serif;
+background-color: #f5f5f5
+}*@ .hedding {
+font-size: 20px;
+color: #ab8181;
+} .main-section {
+position: relative;
+left: 50%;
+right: 50%;
+transform: translate(-50%, 0%);
+} .left-side-product-box img {
+width: 100%;
+} .left-side-product-box .sub-img img {
+margin-top: 5px;
+width: 83px;
+height: 100px;
+} .right-side-pro-detail span {
+font-size: 15px;
+} .right-side-pro-detail p {
+font-size: 25px;
+color: #a1a1a1;
+} .right-side-pro-detail .price-pro {
+color: #E45641;
+} .right-side-pro-detail .tag-section {
+font-size: 18px;
+color: #5D4C46;
+} .pro-box-section .pro-box img {
+width: 100%;
+height: 100%;
+}
+</style><div class="container-fluid py-auto">
+    <div class="col-lg-12 p-3 main-section bg-white">
+        @* <div class="row hedding m-0 pl-3 pt-0 pb-3">
+            Product Detail
+            </div>*@
+        <div class="row m-0" >
+            <div class="col-lg-4 left-side-product-box pb-3"> <img src="~/Images/@Model.ProfileImage" class="border p-3" style="height:320px; width:100%"> </div>
+            <div class="col-lg-8">
+                <div class="right-side-pro-detail border p-3 m-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <span>@ViewBag.catlist</span>
+                            <p class="m-0 p-0">@Model.Pname</p>
+                        </div>
+                        <div class="col-lg-12">
+                            <p class="m-0 p-0 price-pro">RS.@Model.Pprice</p>
+                            <hr class="p-0 m-0">
+                        </div>
+                        <div class="col-lg-12 pt-2">
+                            <h5>Product Feauters</h5>
+                            <span>
+                                @*@Model.product_desc*@
+                                @Html.Raw(Model.Pdetail)
+                            </span>
+                            <hr class="m-0 pt-2 mt-2">
+                        </div>
+                        <div class="col-lg-5">
+                            <h6>Quantity :</h6>
+                            <input name="Quantity" type="number" class="form-control text-center w-100" value="1" max="10" min="1" />
+
+                        </div>
+                        <div class="col-lg-12 mt-3">
+                            <div class="row">
+                                <div class="col-lg-6 pb-2">
+                                    @*<a href="#" class="btn btn-danger w-100">Add To Cart</a>*@
+                                    <a asp-controller="Home" asp-action="AddtoCart" asp-route-id="@Model.Pid" class="btn btn-danger w-100">Add to cart</a>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="#" class="btn btn-success w-100">Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+            <div class="container-fluid pt-md-5">
+                <div class="row">
+
+                    @foreach (var item in @ViewBag.products)
+                    {
+
+                        <div class="col-md-6 col-lg-4 g-mb-30 pb-3">
+                            <article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+                                <a asp-controller="Home" asp-action="DetailsProduct" asp-route-id="@item.Pid" asp-route-cat="@item.Cid">
+                                    <img class="d-inline-block img-fluid mb-4" src="~/Images/@item.ProfileImage" style="height:250px">
+                                </a>
+                                <h4 class="h5 g-color-black g-font-weight-600 g-mb-10"> @item.Pname</h4>
+                                <p>Finding your perfect product</p>
+
+
+                                @if (item.Pprice > 50000)
+                                {
+                                var discount = item.Pprice * 20 / 100;
+                                var mainprice = item.Pprice + discount;
+                                <span class="d-block g-color-grey g-font-size-16"><del>₹ @mainprice</del></span>
+                                <span class="d-block g-color-primary g-font-size-16">₹@item.Pprice</span>
+
+                            }
+                            else
+                            {
+                                <span class="d-block g-color-primary g-font-size-16">₹ @item.Pprice</span>
+                            }
+                            </article>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <style>
+            body {
+                margin-top: 20px;
+                background-color: #fafafa !important;
+            }
+
+
+
+            .g-bg-white {
+                background-color: #fff !important;
+            }
+
+            .u-shadow-v18 {
+                box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.15);
+            }
+
+            .g-color-primary {
+                color: #72c02c !important;
+            }
+
+            .g-font-size-16 {
+                font-size: 1.14286rem !important;
+            }
+
+            .g-mb-10 {
+                margin-bottom: 0.71429rem !important;
+            }
+
+            .g-mb-10 {
+                margin-bottom: 0.71429rem !important;
+            }
+
+            .g-color-black {
+                color: #000 !important;
+            }
+
+            .g-font-weight-600 {
+                font-weight: 600 !important;
+            }
+        </style>

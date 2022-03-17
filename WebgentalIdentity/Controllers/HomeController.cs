@@ -17,37 +17,93 @@ namespace WebgentalIdentity.Controllers
         private readonly IUserService _userService;
         private readonly IEmailService _emailService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger,IUserService userService,IEmailService emailService, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger,IUserService userService,IEmailService emailService, UserManager<ApplicationUser> userManager,ApplicationDbContext db)
         {
             _userService = userService;
             _emailService = emailService;
             _logger = logger;
             _userManager = userManager;
+            _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, int pg = 1, string SearchText = "")
         {
-            /* UserEmailOptions options = new UserEmailOptions
-             {
-                 ToEmails=new List<string>() {"test@gmail.com"},
-                 PlaceHolders=new List<KeyValuePair<string, string>>()
-                 { 
-                     new KeyValuePair<string, string>("{{UserName}}","Yogesh")
-                 }
+            List<Product> Productss;
+            //Search
+            if (SearchText != "" && SearchText != null)
+            {
+                Productss = _db.products.Where(p => p.Pname.Contains(SearchText)).ToList();
+            }
+            else
+            {
+                Productss = _db.products.ToList();
 
-             };
-            await _emailService.SendTestEmail(options);*/
-          /*  var count = _userManager.Users.Count();
-            ViewBag.count = count;*/
-            
+                //pagination
+                const int pageSize = 9;
+                if (pg < 1)
+                    pg = 1;
 
-            return View();
+                int recsCount = Productss.Count();
+                var pager = new Pager(recsCount, pg, pageSize);
+                int recSkip = (pg - 1) * pageSize;
+                var data = Productss.Skip(recSkip).Take(pager.PageSize).ToList();
+                this.ViewBag.Pager = pager;
+                //paginathion 
+                return View(data);
+            }
+            //Search
+
+
+
+            return View(Productss);
         }
 
-        public IActionResult Privacy()
+        public IActionResult DetailsProduct(int id, int cat)
         {
-            return View();
+            var Detail = _db.products.Where(x => x.Pid == id).FirstOrDefault();
+            /*var list = new SelectList(GetCategories(), "Cid", "Cname");*/
+            var cat_list = _db.categories.Where(x => x.Cid == cat).FirstOrDefault();
+            ViewBag.catlist = cat_list.Cname;
+
+            var products = _db.products.ToList();
+            ViewBag.products = products;
+            return View(Detail);
+
+        }
+
+    
+        public IActionResult ShopProduct(string sortOrder, int pg = 1, string SearchText = "")
+        {
+            List<Product> Productss;
+            //Search
+            if (SearchText != "" && SearchText != null)
+            {
+                Productss = _db.products.Where(p => p.Pname.Contains(SearchText)).ToList();
+            }
+            else
+            {
+                Productss = _db.products.ToList();
+
+                //pagination
+                const int pageSize = 12;
+                if (pg < 1)
+                    pg = 1;
+
+                int recsCount = Productss.Count();
+                var pager = new Pager(recsCount, pg, pageSize);
+                int recSkip = (pg - 1) * pageSize;
+                var data = Productss.Skip(recSkip).Take(pager.PageSize).ToList();
+                this.ViewBag.Pager = pager;
+                //paginathion 
+                return View(data);
+            }
+            //Search
+
+
+
+            return View(Productss);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

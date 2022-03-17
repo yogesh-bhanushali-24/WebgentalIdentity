@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebgentalIdentity.Models.Product_Category>
+
+@{
+    ViewData["Title"] = "ShowProduct";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+}
+
+<h1>ShowProduct</h1>
+
+<p>
+    <a asp-action="CreateProduct">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.prod.Pname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prod.Pdetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prod.Pprice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cate.Cname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prod.ProfileImage)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prod.Pname)
+                </td>
+                <td>
+                    @Html.Raw(item.prod.Pdetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prod.Pprice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cate.Cname)
+                </td>
+                <td>
+
+                    <img src="~/Images/@item.prod.ProfileImage"  width="120" height="110" asp-append-version="true" />
+                </td>
+                <td>
+                    <a asp-action="EditProduct" asp-route-id="@item.prod.Pid">Edit</a> |
+                    <a asp-action="DetailsProduct" asp-route-id="@item.prod.Pid" asp-route-cat="@item.prod.Cid">Details</a> |
+                    <a asp-action="DeleteProduct" asp-route-id="@item.prod.Pid" asp-route-cat="@item.prod.Cid">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

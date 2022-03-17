@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebgentalIdentity.Models.Product>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pdetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pprice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfileImage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pdetail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pprice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfileImage)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Pid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Pid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Pid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

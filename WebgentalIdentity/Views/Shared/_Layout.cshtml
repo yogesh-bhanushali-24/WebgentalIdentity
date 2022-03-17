@@ -23,14 +23,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
 
                         @if (User.IsInRole("ADMIN"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Book</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShopProduct">Shop</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin Panel</a>
@@ -39,7 +39,7 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Book</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ShopProduct">Shop</a>
                             </li>
 
                         }
@@ -48,8 +48,14 @@
                 </div>
             </div>
         </nav>
+
+
+
+
+
     </header>
-    <div class="container">
+    <div class="container-fluid">
+        
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

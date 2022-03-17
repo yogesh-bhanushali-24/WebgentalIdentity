@@ -1,0 +1,149 @@
+﻿@model IEnumerable<WebgentalIdentity.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+
+    //Search code
+  @*  int intSno = 0;*@
+    //Search code
+
+
+    //pagination code
+    Pager pager = new Pager();
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+    //pagination code
+}
+
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Home" asp-action="Index">
+        <span class="btn btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Search Key" />
+            <input class="p-1 ml-2 btn btn-sm btn-info" type="submit" value="Search" />
+        </span>
+    </form>
+
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-6 col-lg-4 g-mb-30 pb-3">
+                <article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+                    <a asp-controller="Home" asp-action="DetailsProduct" asp-route-id="@item.Pid" asp-route-cat="@item.Cid">
+                        <img class="d-inline-block img-fluid mb-4" src="~/Images/@item.ProfileImage" style="height:250px">
+                    </a>
+                    <h4 class="h5 g-color-black g-font-weight-600 g-mb-10"> @Html.DisplayFor(modelItem => item.Pname)</h4>
+                    @*    <p>Finding your perfect product</p>*@
+
+
+                    @if (item.Pprice > 50000)
+                    {
+                        var discount = item.Pprice * 20 / 100;
+                        var mainprice = item.Pprice + discount;
+                        <span class="d-block g-color-grey g-font-size-16"><del>₹ @mainprice</del></span>
+                        <span class="d-block g-color-primary g-font-size-16">₹@item.Pprice</span>
+
+                    }
+                    else
+                    {
+                        <span class="d-block g-color-primary g-font-size-16">₹ @Html.DisplayFor(modelItem => item.Pprice)</span>
+                    }
+                </article>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+<style>
+    body {
+        margin-top: 20px;
+        background-color: #fafafa !important;
+    }
+
+
+
+    .g-bg-white {
+        background-color: #fff !important;
+    }
+
+    .u-shadow-v18 {
+        box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.15);
+    }
+
+    .g-color-primary {
+        color: #72c02c !important;
+    }
+
+    .g-font-size-16 {
+        font-size: 1.14286rem !important;
+    }
+
+    .g-mb-10 {
+        margin-bottom: 0.71429rem !important;
+    }
+
+    .g-mb-10 {
+        margin-bottom: 0.71429rem !important;
+    }
+
+    .g-color-black {
+        color: #000 !important;
+    }
+
+    .g-font-weight-600 {
+        font-weight: 600 !important;
+    }
+</style>
+
+
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@(pager.CurrentPage-1)">Previous</a>
+                </li>
+            }
+
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge==pager.CurrentPage?"active":"")">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@pge">@pge</a>
+                </li>
+            }
+
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@(pager.CurrentPage+1)">Next</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Home" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
+                </li>
+
+            }
+
+
+        </ul>
+    }
+</div>

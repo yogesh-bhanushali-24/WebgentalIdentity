@@ -57,6 +57,8 @@ namespace WebgentalIdentity
                 options.Password.RequireNonAlphanumeric =false;
                 options.Password.RequireUppercase =true;
                 options.SignIn.RequireConfirmedEmail = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 5;
             });
 
 

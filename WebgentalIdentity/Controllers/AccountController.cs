@@ -77,11 +77,15 @@ namespace WebgentalIdentity.Controllers
                         return LocalRedirect(returnUrl);
                     }
 
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction("Index", "Home");
                 }
                 if (result.IsNotAllowed)
                 {
                     ModelState.AddModelError("", "Not Allow to login");
+                }
+                else if(result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Account blockded. Try after some time.");
                 }
                 else
                 {

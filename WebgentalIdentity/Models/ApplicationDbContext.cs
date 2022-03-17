@@ -17,6 +17,8 @@ namespace WebgentalIdentity.Models
         }
         public DbSet<Books> books { get; set; }
         public DbSet<Category> categories { get; set; }
+
+        public DbSet<Product> products { get; set; }
        
     }
 }

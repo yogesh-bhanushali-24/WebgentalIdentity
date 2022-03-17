@@ -1,0 +1,75 @@
+﻿@model WebgentalIdentity.ViewModel.ProductViewModel
+
+@{
+    ViewData["Title"] = "CreateProduct";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+}
+
+<h1>CreateProduct</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row m-auto">
+    <div class="col-md-6">
+        <form asp-action="CreateProduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Pname" class="control-label"></label>
+                <input asp-for="Pname" class="form-control" />
+                <span asp-validation-for="Pname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pdetail" class="control-label"></label>
+               @* <input asp-for="Pdetail" class="form-control" />*@
+                <textarea id="basic-example" asp-for="Pdetail" class="form-control">
+                </textarea>
+                <span asp-validation-for="Pdetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pprice" class="control-label"></label>
+                <input asp-for="Pprice" class="form-control" />
+                <span asp-validation-for="Pprice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cid" class="control-label"></label>
+                @Html.DropDownListFor(x => x.Cid, new SelectList(@ViewBag.list, "Cid", "Cname"), "Select Category", htmlAttributes: new { @class = "form-control" })
+                <span asp-validation-for="Cid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfileImage" class="control-label"></label>
+                <input asp-for="ProfileImage" class="form-control" />
+                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
+<script>
+    tinymce.init({
+        selector: '#basic-example',
+        height: 200,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+
+</script>
+
