@@ -29,5 +29,8 @@ namespace WebgentalIdentity.Models
         [DisplayName("Image")]
         [Required]
         public string ProfileImage { get; set; }
+        public int Quantity { get; set; }
+
+        public ICollection<Cart> Carts { get; set; }
     }
 }

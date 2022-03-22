@@ -46,44 +46,46 @@ height: 100%;
         <div class="row m-0" >
             <div class="col-lg-4 left-side-product-box pb-3"> <img src="~/Images/@Model.ProfileImage" class="border p-3" style="height:320px; width:100%"> </div>
             <div class="col-lg-8">
-                <div class="right-side-pro-detail border p-3 m-0">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <span>@ViewBag.catlist</span>
-                            <p class="m-0 p-0">@Model.Pname</p>
-                        </div>
-                        <div class="col-lg-12">
-                            <p class="m-0 p-0 price-pro">RS.@Model.Pprice</p>
-                            <hr class="p-0 m-0">
-                        </div>
-                        <div class="col-lg-12 pt-2">
-                            <h5>Product Feauters</h5>
-                            <span>
-                                @*@Model.product_desc*@
-                                @Html.Raw(Model.Pdetail)
-                            </span>
-                            <hr class="m-0 pt-2 mt-2">
-                        </div>
-                        <div class="col-lg-5">
-                            <h6>Quantity :</h6>
-                            <input name="Quantity" type="number" class="form-control text-center w-100" value="1" max="10" min="1" />
-
-                        </div>
-                        <div class="col-lg-12 mt-3">
-                            <div class="row">
-                                <div class="col-lg-6 pb-2">
-                                    @*<a href="#" class="btn btn-danger w-100">Add To Cart</a>*@
-                                    <a asp-controller="Home" asp-action="AddtoCart" asp-route-id="@Model.Pid" class="btn btn-danger w-100">Add to cart</a>
-                                </div>
-                                <div class="col-lg-6">
-                                    <a href="#" class="btn btn-success w-100">Buy Now</a>
+                <form asp-action="AddtoCart" asp-route-id="@Model.Pid" asp-controller="Customer">
+                    <div class="right-side-pro-detail border p-3 m-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span>@ViewBag.catlist</span>
+                                <p class="m-0 p-0">@Model.Pname</p>
+                            </div>
+                            <div class="col-lg-12">
+                                <p class="m-0 p-0 price-pro">RS.@Model.Pprice</p>
+                                <hr class="p-0 m-0">
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                                <h5>Product Feauters</h5>
+                                <span>
+                                    @*@Model.product_desc*@
+                                    @Html.Raw(Model.Pdetail)
+                                </span>
+                                <hr class="m-0 pt-2 mt-2">
+                            </div>
+                            <div class="col-lg-5">
+                                <h6>Quantity :</h6>
+                                <input @*asp-for="Quantity"*@ type="number" class="form-control text-center w-100" value="1" max="10" min="1" name="quantity" />
+                            </div>
+                            <div class="col-lg-12 mt-3">
+                                <div class="row">
+                                    <div class="col-lg-6 pb-2">
+                                        
+                                            @*<a href="#" class="btn btn-danger w-100">Add To Cart</a>*@
+                                            <input type="submit"  class="btn btn-danger w-100" name="b1" value="Add to cart"/>
+                                       
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="submit"  class="btn btn-success w-100" name="b2" value="Buy Now"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
 
+                </form>
             </div>
             <div class="container-fluid pt-md-5">
                 <div class="row">

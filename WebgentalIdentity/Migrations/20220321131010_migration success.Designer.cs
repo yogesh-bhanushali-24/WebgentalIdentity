@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebgentalIdentity.Models;
 
 namespace WebgentalIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220321131010_migration success")]
+    partial class migrationsuccess
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,15 +254,13 @@ namespace WebgentalIdentity.Migrations
                     b.Property<int>("Pid")
                         .HasColumnType("int");
 
-                    b.Property<int>("Qauntity_Cart")
+                    b.Property<int>("Qauntity")
                         .HasColumnType("int");
 
                     b.Property<string>("Uid")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CartId");
-
-                    b.HasIndex("Pid");
 
                     b.ToTable("carts");
                 });
@@ -365,22 +365,6 @@ namespace WebgentalIdentity.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("WebgentalIdentity.Models.Cart", b =>
-                {
-                    b.HasOne("WebgentalIdentity.Models.Product", "Product")
-                        .WithMany("Carts")
-                        .HasForeignKey("Pid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("WebgentalIdentity.Models.Product", b =>
-                {
-                    b.Navigation("Carts");
                 });
 #pragma warning restore 612, 618
         }
