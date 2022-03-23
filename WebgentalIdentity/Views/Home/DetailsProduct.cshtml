@@ -102,13 +102,12 @@ height: 100%;
                                 <p>Finding your perfect product</p>
 
 
-                                @if (item.Pprice > 50000)
-                                {
-                                var discount = item.Pprice * 20 / 100;
-                                var mainprice = item.Pprice + discount;
-                                <span class="d-block g-color-grey g-font-size-16"><del>₹ @mainprice</del></span>
-                                <span class="d-block g-color-primary g-font-size-16">₹@item.Pprice</span>
-
+                           @if (item.Pprice > 50000)
+                            {
+                            var discount = item.Pprice * 20 / 100;
+                            var mainprice = item.Pprice + discount;
+                            <span class="d-block g-color-grey g-font-size-16"><del>₹ @mainprice</del></span>
+                            <span class="d-block g-color-primary g-font-size-16">₹@item.Pprice</span>
                             }
                             else
                             {

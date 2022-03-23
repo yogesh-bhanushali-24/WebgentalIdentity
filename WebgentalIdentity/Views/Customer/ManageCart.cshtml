@@ -25,14 +25,19 @@
                     </div>
                     <div class="product-details">
                         <h1><strong><span class="item-quantity">@item.Qauntity_Cart</span> x </strong>@item.Product.Pname</h1>
-                        <p><strong>Navy, Size 18</strong></p>
+                        <p><strong>Cart- @item.CartId</strong></p>
                         <p>Product Code - @item.Product.Pid</p>
                     </div>
                 </div>
                 <div class="price">@item.Product.Pprice</div>
-                <div class="quantity">
-                    <input type="number" value="@item.Qauntity_Cart" min="1" class="quantity-field">
-                </div>
+                <form asp-action="updatecart" asp-controller="Customer" asp-route-CartId="@item.CartId">
+                    <div class="quantity">
+                        <input type="number" value="@item.Qauntity_Cart" min="1" max="10" class="quantity-field" name="itemQauntity">
+                    </div>
+                    <div>
+                        <input type="submit" value="Update"/>
+                    </div>
+                </form>
 
                 @if (@item.Qauntity_Cart != null)
                 {

@@ -31,9 +31,7 @@ namespace WebgentalIdentity.Controllers
         }
 
         [Authorize(Roles = "CUSTOMER")]
-
-   
-        public IActionResult AddtoCart(int id , int quantity, string b1,string b2)
+        public IActionResult AddtoCart(int id, int quantity, string b1, string b2)
         {
             var userId = _userService.GetUserId();
             if (b1 != null)
@@ -45,7 +43,6 @@ namespace WebgentalIdentity.Controllers
                 _db.carts.Add(cart);
                 _db.SaveChanges();
                 return RedirectToAction("ManageCart");
-
             }
             else if (b2 != null)
             {
@@ -59,15 +56,14 @@ namespace WebgentalIdentity.Controllers
         {
             var userId = _userService.GetUserId();
             var cartData = _db.carts
-                .Include(x=>x.Product)
+                .Include(x => x.Product)
                 .Where(x => x.Uid == userId).ToList();
 
             /*ViewBag.uid = userId;*/
             /*foreach (var item in cartData)
             {*/
-            var AllItemTotal =_db.carts.Where(x => x.Uid == userId).Sum(x=> x.Product.Pprice *  x.Qauntity_Cart);
+            var AllItemTotal = _db.carts.Where(x => x.Uid == userId).Sum(x => x.Product.Pprice * x.Qauntity_Cart);
             ViewBag.sum = AllItemTotal;
-
             var DeliveryCharge = AllItemTotal * 2 / 100;
             ViewBag.DeliveryCharge = DeliveryCharge;
 
@@ -75,20 +71,15 @@ namespace WebgentalIdentity.Controllers
             {
                 var Grandtotal = AllItemTotal;
                 ViewBag.Grantotal = Grandtotal;
-                
             }
             else
             {
                 var Grandtotal = AllItemTotal + DeliveryCharge;
                 ViewBag.Grantotal = Grandtotal;
             }
-
-
             /*}*/
             /*  var Q = (from P1 in _db.products.ToList() join P2 in _db.carts on P1.Pid equals P2.Pid).ToList();*/
             /* var productdata=_db.products.Where(x=>x.Pid==).*/
-
-
             return View(cartData);
         }
 
@@ -107,6 +98,24 @@ namespace WebgentalIdentity.Controllers
                 ViewBag.notice = "Cart Item Not Remove";
                 return RedirectToAction("ManageCart");
             }
+
+        }
+
+        [HttpPost]
+        public IActionResult updatecart(int itemQauntity,int Pid,int CartId)
+        {
+            Cart cartupdate = _db.carts.Find(CartId);
+            if (cartupdate != null)
+            {
+                cartupdate.Qauntity_Cart = itemQauntity;
+                _db.carts.Update(cartupdate);
+                _db.SaveChanges();
+                return RedirectToAction("ManageCart");
+            }
+            else
+            {
+                return RedirectToAction("ManageCart");
+            }            
             
         }
     }
