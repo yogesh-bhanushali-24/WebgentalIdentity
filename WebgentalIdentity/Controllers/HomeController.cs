@@ -62,14 +62,31 @@ namespace WebgentalIdentity.Controllers
 
         public IActionResult DetailsProduct(int id, int cat)
         {
-            var Detail = _db.products.Where(x => x.Pid == id).FirstOrDefault();
-            /*var list = new SelectList(GetCategories(), "Cid", "Cname");*/
-            var cat_list = _db.categories.Where(x => x.Cid == cat).FirstOrDefault();
-            ViewBag.catlist = cat_list.Cname;
-
-            var products = _db.products.ToList();
-            ViewBag.products = products;
-            return View(Detail);
+            var userId = _userService.GetUserId();
+            var Continue = _db.carts.Where(x => x.Pid == id).Where(x => x.Uid == userId).FirstOrDefault();
+            if (Continue != null)
+            {
+                /*return RedirectToAction("ManageCart", "Customer");*/
+                var Detail = _db.products.Where(x => x.Pid == id).FirstOrDefault();
+                /*var list = new SelectList(GetCategories(), "Cid", "Cname");*/
+                var cat_list = _db.categories.Where(x => x.Cid == cat).FirstOrDefault();
+                ViewBag.catlist = cat_list.Cname;
+                var products = _db.products.ToList();
+                ViewBag.products = products;
+                ViewBag.AlreadyIncart = "AlreadyIncart";
+                return View(Detail);
+            }
+            else
+            {
+                var Detail = _db.products.Where(x => x.Pid == id).FirstOrDefault();
+                /*var list = new SelectList(GetCategories(), "Cid", "Cname");*/
+                var cat_list = _db.categories.Where(x => x.Cid == cat).FirstOrDefault();
+                ViewBag.catlist = cat_list.Cname;
+                var products = _db.products.ToList();
+                ViewBag.products = products;
+                ViewBag.AlreadyIncart = "NotIncart";
+                return View(Detail);
+            }
 
         }
 

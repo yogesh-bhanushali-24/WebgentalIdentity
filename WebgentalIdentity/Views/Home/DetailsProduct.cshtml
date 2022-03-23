@@ -72,10 +72,19 @@ height: 100%;
                             <div class="col-lg-12 mt-3">
                                 <div class="row">
                                     <div class="col-lg-6 pb-2">
-                                        
-                                            @*<a href="#" class="btn btn-danger w-100">Add To Cart</a>*@
-                                            <input type="submit"  class="btn btn-danger w-100" name="b1" value="Add to cart"/>
-                                       
+
+                                        @*<a href="#" class="btn btn-danger w-100">Add To Cart</a>*@
+
+                                        @if (@ViewBag.AlreadyIncart == "AlreadyIncart")
+                                        {
+                                        <a type="submit" class="btn btn-danger w-100" asp-action="ManageCart" asp-controller="Customer">Go to cart</a>
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" class="btn btn-danger w-100" name="b1" value="Add to cart" />
+                                        }
+
+
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="submit"  class="btn btn-success w-100" name="b2" value="Buy Now"/>

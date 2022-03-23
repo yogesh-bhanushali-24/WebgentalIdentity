@@ -11,6 +11,7 @@ using WebgentalIdentity.Service;
 
 namespace WebgentalIdentity.Controllers
 {
+    [Authorize(Roles = "CUSTOMER")]
     public class CustomerController : Controller
     {
         private readonly IUserService _userService;
@@ -30,7 +31,7 @@ namespace WebgentalIdentity.Controllers
             return View();
         }
 
-        [Authorize(Roles = "CUSTOMER")]
+        //cart
         public IActionResult AddtoCart(int id, int quantity, string b1, string b2)
         {
             var userId = _userService.GetUserId();
@@ -51,10 +52,10 @@ namespace WebgentalIdentity.Controllers
             return View();
         }
 
-        [Authorize(Roles = "CUSTOMER")]
         public IActionResult ManageCart()
         {
             var userId = _userService.GetUserId();
+            ViewBag.CountCart = _db.carts.Where(x => x.Uid == userId).Count();
             var cartData = _db.carts
                 .Include(x => x.Product)
                 .Where(x => x.Uid == userId).ToList();
@@ -116,7 +117,21 @@ namespace WebgentalIdentity.Controllers
             {
                 return RedirectToAction("ManageCart");
             }            
-            
         }
+        //cart
+
+        [HttpGet]
+        public IActionResult CustomerAddress()
+        {
+            return View();
+        }
+
+        //CustomerSettings
+        [HttpGet]
+        public IActionResult CustomerSettings()
+        {
+            return View();
+        }
+        //CustomerSettings
     }
 }
