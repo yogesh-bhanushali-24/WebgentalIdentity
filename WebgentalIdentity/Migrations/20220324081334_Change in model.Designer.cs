@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebgentalIdentity.Models;
 
 namespace WebgentalIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220324081334_Change in model")]
+    partial class Changeinmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,7 +186,7 @@ namespace WebgentalIdentity.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.ToTable("addressModels");
+                    b.ToTable("AddressModel");
                 });
 
             modelBuilder.Entity("WebgentalIdentity.Models.ApplicationUser", b =>

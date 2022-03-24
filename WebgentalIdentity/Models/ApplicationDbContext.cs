@@ -20,6 +20,7 @@ namespace WebgentalIdentity.Models
 
         public DbSet<Product> products { get; set; }
         public DbSet<Cart> carts { get; set; }
+        public DbSet<AddressModel> addressModels { get; set; }
        
     }
 }

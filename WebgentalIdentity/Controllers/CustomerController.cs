@@ -120,16 +120,84 @@ namespace WebgentalIdentity.Controllers
         }
         //cart
 
+        //Address
         [HttpGet]
         public IActionResult CustomerAddress()
         {
-            return View();
+            var userId = _userService.GetUserId();
+            var AddressAvailable = _db.addressModels.Where(x => x.Uid == userId).FirstOrDefault();
+            if (AddressAvailable != null)
+            {
+                return RedirectToAction("CustomerConfirmOrder");
+            }
+            else
+            {
+                return View();
+            }
+               
         }
+        [HttpPost]
+        public IActionResult CustomerAddress(AddressModel addressModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = _userService.GetUserId();
+                AddressModel address = new AddressModel();
+                address.FullName = addressModel.FullName;
+                address.State = addressModel.State;
+                address.Pincode = addressModel.Pincode;
+                address.Address = addressModel.Address;
+                address.Landmark = addressModel.Landmark;
+                address.Mobile = addressModel.Mobile;
+                address.Uid = userId;
+                _db.addressModels.Add(address);
+                _db.SaveChanges();
+                return RedirectToAction("CustomerConfirmOrder");
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+        //Address
+
+        //ConfirmOrder
+
+        [HttpGet]
+        public IActionResult CustomerConfirmOrder()
+        {
+            var userId = _userService.GetUserId();
+            ViewBag.CountCart = _db.carts.Where(x => x.Uid == userId).Count();
+            var cartData = _db.carts
+                .Include(x => x.Product)
+                .Where(x => x.Uid == userId).ToList();
+            var AllItemTotal = _db.carts.Where(x => x.Uid == userId).Sum(x => x.Product.Pprice * x.Qauntity_Cart);
+            ViewBag.sum = AllItemTotal;
+            var DeliveryCharge = AllItemTotal * 2 / 100;
+            ViewBag.DeliveryCharge = DeliveryCharge;
+
+            if (AllItemTotal >= 80000)
+            {
+                var Grandtotal = AllItemTotal;
+                ViewBag.Grantotal = Grandtotal;
+            }
+            else
+            {
+                var Grandtotal = AllItemTotal + DeliveryCharge;
+                ViewBag.Grantotal = Grandtotal;
+            }
+
+            ViewBag.AllAddress = _db.addressModels.Where(x => x.Uid == userId).ToList();
+            return View(cartData);
+        }
+        //ConfirmOrder
 
         //CustomerSettings
         [HttpGet]
         public IActionResult CustomerSettings()
         {
+          
             return View();
         }
         //CustomerSettings
