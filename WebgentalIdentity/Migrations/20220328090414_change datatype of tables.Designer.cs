@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebgentalIdentity.Models;
 
 namespace WebgentalIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220328090414_change datatype of tables")]
+    partial class changedatatypeoftables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,14 +345,7 @@ namespace WebgentalIdentity.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("addressModelsAddressId")
-                        .HasColumnType("int");
-
                     b.HasKey("OrderId");
-
-                    b.HasIndex("Pid");
-
-                    b.HasIndex("addressModelsAddressId");
 
                     b.ToTable("Orderss");
                 });
@@ -452,33 +447,9 @@ namespace WebgentalIdentity.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebgentalIdentity.Models.Orders", b =>
-                {
-                    b.HasOne("WebgentalIdentity.Models.Product", "Product")
-                        .WithMany("Orderss")
-                        .HasForeignKey("Pid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebgentalIdentity.Models.AddressModel", "addressModels")
-                        .WithMany("Orderss")
-                        .HasForeignKey("addressModelsAddressId");
-
-                    b.Navigation("addressModels");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("WebgentalIdentity.Models.AddressModel", b =>
-                {
-                    b.Navigation("Orderss");
-                });
-
             modelBuilder.Entity("WebgentalIdentity.Models.Product", b =>
                 {
                     b.Navigation("Carts");
-
-                    b.Navigation("Orderss");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,9 +1,9 @@
 ﻿@model WebgentalIdentity.Models.AddressModel
-
 @{
-    ViewData["Title"] = "CustomerAddress";
+    ViewData["Title"] = "MultiAddress";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <style>
     .text-font {
@@ -66,7 +66,7 @@
                     <h5 class="mb-0 text-font text-uppercase">Delivery address</h5>
                 </div>
                 <div class="card-body">
-                    <form asp-action="CustomerAddress">
+                    <form asp-action="MultiAddress">
 
                         <div class="form-outline mb-4">
 
@@ -84,7 +84,7 @@
 
                         <!-- Text input -->
                         <div class="form-outline mb-4">
-                            <textarea asp-for="Address" type="text" id="form11Example4" class="form-control" ></textarea>
+                            <textarea asp-for="Address" type="text" id="form11Example4" class="form-control"></textarea>
                             <label class="form-label" for="form11Example4">Address</label>
                             <span asp-validation-for="Address" class="text-danger"></span>
                         </div>
@@ -93,7 +93,7 @@
                         <div class="row mb-4">
                             <div class="col">
                                 <div class="form-outline">
-                                    <input  asp-for="Pincode" type="text" id="form11Example1" class="form-control" />
+                                    <input asp-for="Pincode" type="text" id="form11Example1" class="form-control" />
                                     <label class="form-label" for="form11Example1">Pincode</label>
                                     <span asp-validation-for="Pincode" class="text-danger"></span>
                                 </div>
@@ -113,12 +113,12 @@
                             <input asp-for="Mobile" class="form-control" type="text" />
                             <span asp-validation-for="Mobile" class="text-danger"></span>
                         </div>
-                      @*  <div class="form-group" hidden>
+                        @*  <div class="form-group" hidden>
 
-                            <input asp-for="Uid" class="form-control" />
-                            <span asp-validation-for="Uid" class="text-danger"></span>
-                            <label asp-for="Uid" class="control-label"></label>
-                        </div>*@
+                                <input asp-for="Uid" class="form-control" />
+                                <span asp-validation-for="Uid" class="text-danger"></span>
+                                <label asp-for="Uid" class="control-label"></label>
+                            </div>*@
 
                         <div class="text-center">
                             <button type="submit" class="btn button-order">Continue</button>
@@ -135,4 +135,6 @@
     <!--Section: Design Block-->
 
 </div>
+
+
 

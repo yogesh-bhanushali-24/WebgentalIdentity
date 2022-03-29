@@ -4,231 +4,110 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
+<form asp-action="PlaceOrder"  >
+    <div class="container d-flex justify-content-center mt-5 mb-5">
+        <div class="row g-3" style="border:1px solid gray">
+            <div class="col-md-6">
+                <span style="margin-bottom:20px!important;">Payment Method</span>
+                <div class="card" style="margin: 15px 0px 15px 0px; height: 90% ">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Cash On Delivery
 
-    .card {
-        max-width: 1000px;
-        margin: 2vh
-    }
+                        </label>
 
-    .card-top {
-        padding: 0.7rem 5rem
-    }
-
-        .card-top a {
-            float: left;
-            margin-top: 0.7rem
-        }
-
-    #logo {
-        font-family: 'Dancing Script';
-        font-weight: bold;
-        font-size: 1.6rem
-    }
-
-    .card-body {
-        padding: 0 5rem 5rem 5rem;
-        background-size: cover;
-        background-repeat: no-repeat
-    }
-
-
-    .card-top {
-        padding: 0.7rem 1rem
-    }
-
-    }
-
-
-
-    .upper {
-        padding: 1rem 0;
-        justify-content: space-evenly
-    }
-
-    #three {
-        border-radius: 1rem;
-        width: 22px;
-        height: 22px;
-        margin-right: 3px;
-        border: 1px solid blue;
-        text-align: center;
-        display: inline-block
-    }
-
-    #payment {
-        margin: 0;
-        color: blue
-    }
-
-    .icons {
-        margin-left: auto
-    }
-
-    form span {
-        color: rgb(179, 179, 179)
-    }
-
-    form {
-        padding: 2vh 0
-    }
-
-    input {
-        border: 1px solid rgba(0, 0, 0, 0.137);
-        padding: 1vh;
-        margin-bottom: 4vh;
-        outline: none;
-        width: 100%;
-        background-color: rgb(247, 247, 247)
-    }
-
-        input:focus::-webkit-input-placeholder {
-            color: transparent
-        }
-
-    .header {
-        font-size: 1.5rem
-    }
-
-    .left {
-        background-color: #ffffff;
-        padding: 6vh
-    }
-
-        .left img {
-            width: 2rem
-        }
-
-        .left .col-4 {
-            padding-left: 0
-        }
-
-    
-
-    .right {
-        background-color: #ffffff;
-        padding: 5vh
-    }
-
-    .col-8 {
-        padding: -1px 1vh
-    }
-
-    .lower {
-        line-height: 2
-    }
-
-    .btn {
-        background-color: rgb(23, 4, 189);
-        border-color: rgb(23, 4, 189);
-        color: white;
-        width: 100%;
-        font-size: 0.7rem;
-        margin: 4vh 0 1.5vh 0;
-        padding: 1.5vh;
-        border-radius: 0
-    }
-
-        .btn:focus {
-            box-shadow: none;
-            outline: none;
-            box-shadow: none;
-            color: white;
-            -webkit-box-shadow: none;
-            -webkit-user-select: none;
-            transition: none
-        }
-
-        .btn:hover {
-            color: white
-        }
-
-    a {
-        color: black
-    }
-
-        a:hover {
-            color: black;
-            text-decoration: none
-        }
-
-    input[type=checkbox] {
-        width: unset;
-        margin-bottom: unset
-    }
-
-    #cvv {
-        background-image: linear-gradient(to left, rgba(255, 255, 255, 0.575), rgba(255, 255, 255, 0.541)), url("https://img.icons8.com/material-outlined/24/000000/help.png");
-        background-repeat: no-repeat;
-        background-position-x: 95%;
-        background-position-y: center
-    }
-
-        #cvv:hover {
-        }
-</style>
-
-
-
-<center>
-    <div class="card" style="border:none;">
-
-        <div class="card-body">
-
-            <div class="row">
-                
-
-               
-                <div class="col-md-5" style="margin-left:0px !important; margin-right:0px !important;">
-                    <div class="right border">
-                        <div class="header">Order Summary</div>
-                        <p>@ViewBag.CountCart items</p>
+                    </div>
+                    <img src="~/Images/Cash On Delivery.png" style="height:150px;margin-top:100px;" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <span>Summary</span>
+                <div class="card" style="margin: 15px 0px 15px 0px;">
+                    <div class="d-flex justify-content-between p-3">
+                        @*<div class="d-flex flex-column"> <span>Pro(Billed Monthly) <i class="fa fa-caret-down"></i></span> <a href="#" class="billing">Save 20% with annual billing</a> </div>
+                    <div class="mt-1"> <sup class="super-price">$9.99</sup> <span class="super-month">/Month</span> </div>*@
+                        <h3>Summary</h3>
+                    </div>
+                    <hr class="mt-0 line">
+                    <div class="p-3">
                         @foreach (var item in Model)
                         {
-                            <div class="row item">
-                                <div class="col-4 align-self-center"><img class="img-fluid" src="~/Images/@item.Product.ProfileImage"></div>
-                                <div class="col-8">
-                                    <div class="row">₹@item.Product.Pprice</div>
-                                    <div class="row text-muted">@item.Product.Pname</div>
-                                    <div class="row">
-                                        Qty:@item.Qauntity_Cart
-                                        @{
-                                            var subtotal = @item.Product.Pprice * @item.Qauntity_Cart;
-                                            <p style="margin-left:100px;"><b>₹@subtotal</b></p>
-                                        }
+                            var subtotal = @item.Product.Pprice * @item.Qauntity_Cart;
+                            <div class="d-flex justify-content-between mb-2"> <span>@item.Product.Pname</span>  @subtotal<span> </span> </div>
 
-                                    </div>
-                                </div>
-                            </div>
                         }
-                        <hr>
-                        <div class="row lower">
-                            <div class="col text-left">Subtotal</div>
-                            <div class="col text-right">₹@ViewBag.sum</div>
-                        </div>
-                        <div class="row lower">
-                            <div class="col text-left">Delivery</div>
-                            @if (ViewBag.sum >= 60000)
+                        @* <div class="d-flex justify-content-between mb-2"> <span>Items @ViewBag.CountCart</span> <span> @ViewBag.sum</span> </div>*@
+                        <div class="d-flex justify-content-between">
+                            <span>Delivery <i class="fa fa-clock-o"></i></span>
+                            @if (ViewBag.sum >= 80000)
                             {
-                                <div class="col text-right">Free</div>
+                                <span>Free</span>
                             }
                             else
                             {
-                                <div class="col text-right">₹ @ViewBag.DeliveryCharge</div>
+                                <span>@ViewBag.DeliveryCharge</span>
                             }
 
                         </div>
-                        <div class="row lower">
-                            <div class="col text-left"><b>Total to pay</b></div>
-                            <div class="col text-right"><b>₹@ViewBag.Grantotal</b></div>
-                        </div>
-                        <button class="btn">Place order</button>
-                        <p class="text-muted text-center">Complimentary Shipping</p>
                     </div>
+                    <hr class="mt-0 line">
+                    <div class="p-3 d-flex justify-content-between">
+                        <div class="d-flex flex-column"> <span>Total you pay</span>@* <small>After 30 days $9.59</small>*@ </div> <span>₹@ViewBag.Grantotal</span>
+                    </div>
+                    <div class="p-3">
+                        @*<a asp-action="PlaceOrder"  asp-route-Radioaddress="@ViewBag.RadioAddress"><button class="btn btn-primary btn-block free-button">Place Order</button></a>*@
+@*                        <button class="btn btn-primary btn-block free-button">Place Order</button>
+*@                        <input type="submit" class="btn btn-primary btn-block free-button" value="Place Order" />
 
+                        @*   <div class="text-center"> <a href="#">Have a promo code?</a> </div>*@
+                    </div>
                 </div>
             </div>
+            
+
+
         </div>
-        <div> </div>
+
     </div>
-</center>
+
+
+    <div style=" margin-left: 15%; margin-top: -21px;" class="col-lg-9">
+        <h4>All closed</h4>
+        <hr style="margin-left:0%;width:94%" />
+        <div>
+           @* <a asp-action="MultiAddress" asp-controller="Customer"><button class="btn btn-primary" style="margin-bottom:20px;">Add Address</button></a>*@
+            <a asp-action="MultiAddress" asp-controller="Customer" class="btn btn-primary" style="margin-bottom:20px;">Add Address</a>
+        </div>
+
+
+        @foreach (var item in @ViewBag.AllAddress)
+        {
+            <div class="accordion col-md-8" id="accordionWithRadioExample" style="margin-left: -15px; width: 97%; max-width: 97.666667%!important; ">
+                <div class="card">
+
+
+
+                    <div class="form-check m-3">
+
+                        <input class="form-check-input" type="radio" name="AddressRadios" id="exampleRadios2" value="@item.AddressId">
+                      @*  @{
+                            ViewBag.RadioAddress = @item.AddressId;
+                        }*@
+                        <label class="form-check-label" for="exampleRadios2">
+                            <address>
+                                @item.FullName <br />
+                                @item.State , @item.Pincode , @item.Address , @item.Landmark<br />
+                                @item.Mobile
+                            </address>
+                            <a class="btn btn-danger" style="margin-bottom:20px;" asp-action="RemoveAddress" asp-controller="Customer" asp-route-id="@item.AddressId">Remove</a>
+                            <a class="btn btn-secondary" style="margin-bottom:20px;"asp-action="EditAddress" asp-controller="Customer" asp-route-id="@item.AddressId">Edit</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</form>
+

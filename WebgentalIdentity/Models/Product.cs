@@ -32,5 +32,6 @@ namespace WebgentalIdentity.Models
         public int Quantity { get; set; }
 
         public ICollection<Cart> Carts { get; set; }
+        public ICollection<Orders> Orderss { get; set; }
     }
 }

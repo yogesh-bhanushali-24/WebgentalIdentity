@@ -59,10 +59,6 @@ namespace WebgentalIdentity.Controllers
             var cartData = _db.carts
                 .Include(x => x.Product)
                 .Where(x => x.Uid == userId).ToList();
-
-            /*ViewBag.uid = userId;*/
-            /*foreach (var item in cartData)
-            {*/
             var AllItemTotal = _db.carts.Where(x => x.Uid == userId).Sum(x => x.Product.Pprice * x.Qauntity_Cart);
             ViewBag.sum = AllItemTotal;
             var DeliveryCharge = AllItemTotal * 2 / 100;
@@ -78,9 +74,6 @@ namespace WebgentalIdentity.Controllers
                 var Grandtotal = AllItemTotal + DeliveryCharge;
                 ViewBag.Grantotal = Grandtotal;
             }
-            /*}*/
-            /*  var Q = (from P1 in _db.products.ToList() join P2 in _db.carts on P1.Pid equals P2.Pid).ToList();*/
-            /* var productdata=_db.products.Where(x=>x.Pid==).*/
             return View(cartData);
         }
 
@@ -126,6 +119,7 @@ namespace WebgentalIdentity.Controllers
         {
             var userId = _userService.GetUserId();
             var AddressAvailable = _db.addressModels.Where(x => x.Uid == userId).FirstOrDefault();
+            var Addresscount = _db.addressModels.Where(x => x.Uid == userId).Count();
             if (AddressAvailable != null)
             {
                 return RedirectToAction("CustomerConfirmOrder");
@@ -133,9 +127,9 @@ namespace WebgentalIdentity.Controllers
             else
             {
                 return View();
-            }
-               
+            }        
         }
+
         [HttpPost]
         public IActionResult CustomerAddress(AddressModel addressModel)
         {
@@ -160,6 +154,74 @@ namespace WebgentalIdentity.Controllers
             }
 
         }
+
+        [HttpGet]
+        public IActionResult MultiAddress()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MultiAddress(AddressModel addressModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = _userService.GetUserId();
+                AddressModel address = new AddressModel();
+                address.FullName = addressModel.FullName;
+                address.State = addressModel.State;
+                address.Pincode = addressModel.Pincode;
+                address.Address = addressModel.Address;
+                address.Landmark = addressModel.Landmark;
+                address.Mobile = addressModel.Mobile;
+                address.Uid = userId;
+                _db.addressModels.Add(address);
+                _db.SaveChanges();
+                return RedirectToAction("CustomerConfirmOrder");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+    
+        public IActionResult RemoveAddress(int id)
+        {
+            var RemoveAddress = _db.addressModels.Find(id);
+            if (RemoveAddress != null)
+            {
+                _db.addressModels.Remove(RemoveAddress);
+                _db.SaveChanges();
+                return RedirectToAction("CustomerConfirmOrder");
+            }
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult EditAddress(int id)
+        {
+            var Edit = _db.addressModels.Where(x=>x.AddressId==id).FirstOrDefault();
+            return View(Edit);
+
+        }
+
+        [HttpPost]
+        public IActionResult EditAddress(AddressModel obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.addressModels.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("CustomerConfirmOrder");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         //Address
 
         //ConfirmOrder
@@ -201,5 +263,51 @@ namespace WebgentalIdentity.Controllers
             return View();
         }
         //CustomerSettings
+
+
+        //placeorder
+        public IActionResult PlaceOrder(int AddressRadios)
+        {
+            if (AddressRadios > 0) 
+            {
+                var userId = _userService.GetUserId();
+                var cartall = _db.carts.Where(x => x.Uid == userId).ToList();
+                foreach (var item in cartall)
+                {
+                    Orders Placeorder = new Orders();
+                    Placeorder.AddressId = AddressRadios;
+                    Placeorder.Quantity = item.Qauntity_Cart;
+                    Placeorder.Pid = item.Pid;
+                    Placeorder.Status = "Pending";
+                    Placeorder.Date = DateTime.Now;
+                    Placeorder.UserId = userId;
+                    _db.Orderss.Add(Placeorder);
+                    _db.carts.Remove(item);      
+                }
+                _db.SaveChanges();
+                return RedirectToAction("ShowAllOrders");
+            }
+            else
+            {
+                return RedirectToAction("CustomerConfirmOrder");
+            }
+        }
+
+
+        public IActionResult ShowAllOrders()
+        {
+            var userId = _userService.GetUserId();
+          
+            var AllItemTotal = _db.Orderss.Where(x => x.UserId == userId).Sum(x => x.Product.Pprice * x.Quantity);
+            ViewBag.sum = AllItemTotal;
+            var ordersDetail = _db.Orderss
+            .Include(x => x.Product)
+            .Where(x => x.UserId == userId).ToList();
+           /* var DeliveryAddress = _db.Orderss.Include(x => x.addressModels).Where(x => x.UserId == userId).ToList();*/
+
+            return View(ordersDetail);
+        }
+        //placeorder
+
     }
 }

@@ -23,5 +23,7 @@ namespace WebgentalIdentity.Models
         [Phone]
         public string Mobile { get; set; }
         public string Uid { get; set; }
+
+        public ICollection<Orders> Orderss { get; set; }
     }
 }
