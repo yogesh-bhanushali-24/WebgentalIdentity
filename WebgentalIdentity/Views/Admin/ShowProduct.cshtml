@@ -3,16 +3,14 @@
 @{
     ViewData["Title"] = "ShowProduct";
     Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    int SR = 1;
 }
-
-<h1>ShowProduct</h1>
-
-<p>
-    <a asp-action="CreateProduct">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                SR
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.prod.Pname)
             </th>
@@ -42,6 +40,10 @@
         {
         <tr>
             <td>
+                @SR
+                
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.prod.Pname)
             </td>
             <td>
@@ -60,13 +62,14 @@
 
                 <img src="~/Images/@item.prod.ProfileImage" width="120" height="110" asp-append-version="true" />
             </td>
-         
+
             <td>
                 <a asp-action="EditProduct" asp-route-id="@item.prod.Pid">Edit</a> |
                 <a asp-action="DetailsProduct" asp-route-id="@item.prod.Pid" asp-route-cat="@item.prod.Cid">Details</a> |
                 <a asp-action="DeleteProduct" asp-route-id="@item.prod.Pid" asp-route-cat="@item.prod.Cid">Delete</a>
             </td>
         </tr>
+            SR++;
         }
     </tbody>
 </table>

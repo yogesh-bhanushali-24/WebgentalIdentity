@@ -33,7 +33,7 @@
                 @Html.DisplayNameFor(model => model.addressModels.Mobile)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.applicationUser)
+                Customer
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -47,7 +47,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <form  asp-action="UpdateStatus" asp-route-id="@item.OrderId">
+            <form  asp-action="UpdateStatus" asp-route-id="@item.OrderId" asp-route-Pid="@item.Pid" asp-route-qauntity="@item.Quantity">
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrderId)
@@ -92,12 +92,7 @@
                 </td>
                 <td>
                     <input type="submit" value="Update" />
-                    <a asp-action="EditOrder" asp-route-id="@item.OrderId" class="btn btn-close-white btn-primary">Edit</a>
-
-                    @*  <a asp-action="UpdateStatus" asp-route-id="@item.OrderId">Update</a> |
-                         |
-                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
+                   
                 </td>
             </tr>
             </form>

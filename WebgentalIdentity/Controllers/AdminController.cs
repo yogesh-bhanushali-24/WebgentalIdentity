@@ -37,7 +37,6 @@ namespace WebgentalIdentity.Controllers
             _roleManager = roleManager;
             _account = account;
         }
-
         public IActionResult Index()
         {
             var ShowUsers =  (from user in _db.Users
@@ -47,14 +46,18 @@ namespace WebgentalIdentity.Controllers
                                    on userRole.RoleId equals role.Id
                                    where role.Name != "ADMIN"
                                    select user).Count();
-           /* var count = _userManager.Users.Count();*/
             ViewBag.count = ShowUsers;
+            ViewBag.Productcount = _db.products.Count();
+            ViewBag.Orderscount = _db.Orderss.Count();
+            ViewBag.ReceivedPayment = _db.Orderss.Where(x => x.Status == "Delivered").Sum(x => x.Product.Pprice * x.Quantity);
+            ViewBag.Pendingpayment = _db.Orderss.Sum(x => x.Product.Pprice * x.Quantity) - _db.Orderss.Where(x => x.Status == "Delivered").Sum(x => x.Product.Pprice * x.Quantity);
+            ViewBag.PendingOrders = _db.Orderss.Where(x => x.Status == "Pending").Count();
+            ViewBag.DispatchOrders = _db.Orderss.Where(x => x.Status == "Dispatch").Count();
+            ViewBag.OutOfDeliveryOrders = _db.Orderss.Where(x => x.Status == "OutOfDelivery").Count();
+            ViewBag.CancelOrders = _db.Orderss.Where(x => x.Status == "Cancel").Count();
+            ViewBag.DeliveredOrders = _db.Orderss.Where(x => x.Status == "Delivered").Count();
+            
 
-            var Productcount = _db.products.Count();
-            ViewBag.Productcount = Productcount;
-
-            var Orderscount = _db.Orderss.Count();
-            ViewBag.Orderscount = Orderscount;
 
             return View();
         }
@@ -431,15 +434,30 @@ namespace WebgentalIdentity.Controllers
 
         }
 
-        public IActionResult UpdateStatus(int id,string status)
+        public IActionResult UpdateStatus(int id,string status,int Pid,int qauntity)
         {
+            
             Orders orderupdate = _db.Orderss.Find(id);
             if (orderupdate != null)
             {
-                orderupdate.Status = status;
-                _db.Orderss.Update(orderupdate);
-                _db.SaveChanges();
-                return RedirectToAction("ShowAllOrders");
+                if (status == "Cancel")
+                {
+                    orderupdate.Status = status;
+                    Product productStock = _db.products.Find(Pid);
+                    productStock.Stock = productStock.Stock + qauntity;
+                    _db.Update(productStock);
+                    _db.Orderss.Update(orderupdate);
+                    _db.SaveChanges();
+                    return RedirectToAction("ShowAllOrders");
+                }
+                else
+                {
+                    orderupdate.Status = status;
+                    _db.Orderss.Update(orderupdate);
+                    _db.SaveChanges();
+                    return RedirectToAction("ShowAllOrders");
+                }
+                
             }
             else
             {
@@ -455,7 +473,16 @@ namespace WebgentalIdentity.Controllers
 
         //show Orders
 
+        //Received Payment
+        public IActionResult ReceivedPayment()
+        {
+            var ReceivedPayment = _db.Orderss.Where(x => x.Status == "Delivered").Sum(x => x.Product.Pprice * x.Quantity);
+            ViewBag.ReceivedPayment = ReceivedPayment;
+            return View(_db.Orderss.Where(x => x.Status == "Delivered").Include(x=>x.Product).Include(x=>x.applicationUser).ToList());
+        }
 
+
+        //Received Payment
 
 
 

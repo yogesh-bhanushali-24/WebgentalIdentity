@@ -14,6 +14,10 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="~/AdminDashboard/css/styles.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -53,7 +57,7 @@
                         </a>
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa fa-list-alt"></i></div>
                             Manage Categories
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -65,7 +69,7 @@
                         </div>
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa fa-solid fa-box-open "></i></div>
                             Manage Product
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -77,7 +81,7 @@
                         </div>
 
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePagess" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa fa-users"></i></div>
                             Manage Users
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
@@ -89,11 +93,13 @@
                             </nav>
                         </div>
                         <a class="nav-link"  asp-controller="Home" asp-action="Index" >
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa fa-home"></i></div>
                             User Dashboard
                         </a>
                         <a class="nav-link" asp-action="Logout" asp-controller="Account">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
+                       
+                            
                             Logout
                         </a>
                     </div>

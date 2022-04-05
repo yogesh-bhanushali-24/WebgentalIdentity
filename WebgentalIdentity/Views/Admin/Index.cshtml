@@ -6,9 +6,9 @@
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Dashboard</h1>
-    <ol class="breadcrumb mb-4">
+   @* <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
+    </ol>*@
     <div class="row">
         <div class="col-xl-3 col-md-6">
             <div class="card bg-primary text-white mb-4">
@@ -39,9 +39,9 @@
         </div>
         <div class="col-xl-3 col-md-6">
             <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Danger Card</div>
+                <div class="card-body">Received Payment <span class="fw-bold">₹@ViewBag.ReceivedPayment.00</span></div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="#">View Details</a>
+                    <a class="small text-white stretched-link" asp-controller="Admin" asp-action="ReceivedPayment">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
@@ -49,3 +49,72 @@
     </div>
 </div>
 
+<div class="d-flex">
+    <div class="w-50 p-5">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        
+            <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+
+            <script>
+                var xValues = ["Received", "Pending"];
+                var yValues = [@ViewBag.ReceivedPayment, @ViewBag.Pendingpayment];
+                var barColors = [
+                    "#1e7145",
+                    "orange",
+                    
+                ];
+
+                new Chart("myChart3", {
+                    type: "doughnut",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: "Payments"
+                        }
+                    }
+                });
+            </script>
+
+    </div>
+
+    <div class="w-50 p-5">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+
+        <script>
+            var xValues = ["Pending", "Dispatch", "Out Of Delivery", "Cancel", "Delivered"];
+            var yValues = [@ViewBag.PendingOrders,@ViewBag.DispatchOrders,@ViewBag.OutOfDeliveryOrders,@ViewBag.CancelOrders,@ViewBag.DeliveredOrders];
+            var barColors = [
+                "orange",
+                "#00aba9",
+                "#2b5797",
+                "#fd7c6e",
+                "#1e7145"
+            ];
+
+            new Chart("myChart2", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Orders Status"
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>

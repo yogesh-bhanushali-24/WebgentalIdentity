@@ -160,13 +160,13 @@
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-primary" style="background-color: #AB47BC !important" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <button class="btn btn-primary" style="background-color: #AB47BC !important" data-toggle="collapse" data-target="#collapseOne(@item.OrderId)" aria-expanded="true" aria-controls="collapseOne">
                                                     Show Address
                                                 </button>
                                             </h5>
                                         </div>
 
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                        <div id="collapseOne(@item.OrderId)" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                             <div class="card-body">
 
                                                 <ul>
@@ -202,19 +202,19 @@
                                         <div class="progress my-auto">
                                             @if (item.Status == "OutOfDelivery")
                                             {
-                                                <div class="progress-bar progress-bar rounded" style="width: 70%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar progress-bar rounded" style="width: 70%" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                             }
                                             else if (item.Status == "Dispatch")
                                             {
-                                                <div class="progress-bar progress-bar rounded" style="width: 35%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar progress-bar rounded" style="width: 35%" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
                                             }
                                             else if (item.Status == "Delivered")
                                             {
-                                                <div class="progress-bar progress-bar-delivered rounded" style="width: 100%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar progress-bar-delivered rounded" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             }
                                             else if (item.Status == "Cancel")
                                             {
-                                                <div class="progress-bar progress-bar-cancel rounded" style="width: 100%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar progress-bar-cancel rounded" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                             }
                                             else
                                             {
@@ -223,14 +223,24 @@
                                             }
                                         </div>
                                         <div class="media row justify-content-between ">
-                                            <div class="col-auto text-right"><span> <small class="text-right mr-sm-2">Dispatch</small> <i class="fa fa-circle active"></i> </span></div>
-                                            <div class="flex-col"> <span> <small class="text-right mr-sm-2">Out for delivary</small><i class="fa fa-circle active"></i></span></div>
-                                            <div class="col-auto flex-col-auto"><small class="text-right mr-sm-2">Delivered</small><span> <i class="fa fa-circle"></i></span></div>
+                                            @{
+                                             
+                                                var activeDispatch = item.Status == "Dispatch" || item.Status == "Delivered" || item.Status == "OutOfDelivery" ? "active" : "";
+                                            }
+                                            <div class="col-auto text-right"><span> <small class="text-right mr-sm-2">Dispatch</small> <i class="fa fa-circle @activeDispatch"></i> </span></div>
+                                            @{
+                                                var activeoutfordelivery = item.Status == "OutOfDelivery"|| item.Status == "Delivered" ? "active" : "";
+                                            }
+                                            <div class="flex-col"> <span> <small class="text-right mr-sm-2">Out for delivary</small><i class="fa fa-circle @activeoutfordelivery"></i></span></div>
+                                            @{
+                                                var activedelivery = item.Status == "Delivered" ? "active" : "";
+                                            }
+                                            <div class="col-auto flex-col-auto"><small class="text-right mr-sm-2">Delivered</small><span> <i class="fa fa-circle @activedelivery"></i></span></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        }
+                                                }
 
                     </div>
                 </div>
