@@ -22,6 +22,8 @@ namespace WebgentalIdentity.Models
         public DbSet<Cart> carts { get; set; }
         public DbSet<AddressModel> addressModels { get; set; }
         public DbSet<Orders> Orderss { get; set; }
+
+        public DbSet<DirectOrder> directOrders { get; set; }
        
     }
 }

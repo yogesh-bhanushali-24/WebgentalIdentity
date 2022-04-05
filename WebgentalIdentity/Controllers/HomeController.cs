@@ -62,6 +62,8 @@ namespace WebgentalIdentity.Controllers
 
         public IActionResult DetailsProduct(int id, int cat)
         {
+            var productStock = _db.products.Where(x => x.Pid == id).FirstOrDefault().Stock;
+            ViewBag.Stock = "" + productStock + " Items Left";
             var userId = _userService.GetUserId();
             var Continue = _db.carts.Where(x => x.Pid == id).Where(x => x.Uid == userId).FirstOrDefault();
             if (Continue != null)

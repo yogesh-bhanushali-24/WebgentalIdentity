@@ -4,29 +4,29 @@
 @if (_signInManager.IsSignedIn(User))
 {
 
-    @*<li class="nav nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-labelledby="navbarDropdown">
+    <li class="nav nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownNav" role="button" data-toggle="dropdown" aria-labelledby="navbarDropdown">
                 Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownNav">
                     <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
                     <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Chanage password</a>
                     <a class="dropdown-item" asp-action="CustomerSettings" asp-controller="Customer">Settings</a>
 
                 </div>
                 </a>
-        </li>*@
+        </li>
+@*
+    <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Hello @(User.FindFirst("UserFirstName").Value + " " + User.FindFirst("UserLastName").Value)
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
-        <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Chanage password</a>
-        <a class="dropdown-item" asp-action="CustomerSettings" asp-controller="Customer">Settings</a>
-    </div>
-</div>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
+                <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Chanage password</a>
+                <a class="dropdown-item" asp-action="CustomerSettings" asp-controller="Customer">Settings</a>
+            </div>
+        </div>*@
 }
 else
 {

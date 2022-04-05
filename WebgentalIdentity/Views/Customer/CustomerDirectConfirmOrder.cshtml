@@ -1,0 +1,117 @@
+﻿@model IEnumerable<WebgentalIdentity.Models.DirectOrder>
+@{
+    ViewData["Title"] = "CustomerDirectConfirmOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<form asp-action="DirectPlaceOrder">
+    <div class="container d-flex justify-content-center mt-5 mb-5">
+        <div class="row g-3" style="border:1px solid gray">
+            <div class="col-md-6">
+                <span style="margin-bottom:20px!important;">Payment Method</span>
+                <div class="card" style="margin: 15px 0px 15px 0px; height: 90% ">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Cash On Delivery
+
+                        </label>
+
+                    </div>
+                    <img src="~/Images/Cash On Delivery.png" style="height:150px;margin-top:100px;" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <span>Summary</span>
+                <div class="card" style="margin: 15px 0px 15px 0px;">
+                    <div class="d-flex justify-content-between p-3">
+                        @*<div class="d-flex flex-column"> <span>Pro(Billed Monthly) <i class="fa fa-caret-down"></i></span> <a href="#" class="billing">Save 20% with annual billing</a> </div>
+                            <div class="mt-1"> <sup class="super-price">$9.99</sup> <span class="super-month">/Month</span> </div>*@
+                        <h3>Summary</h3>
+                    </div>
+                    <hr class="mt-0 line">
+                    <div class="p-3">
+                        @foreach (var item in Model)
+                        {
+                            var subtotal = @item.Product.Pprice * @item.Qauntity_Cart;
+                            <div class="d-flex justify-content-between mb-2"> <span>@item.Product.Pname - @item.Qauntity_Cart</span>  @subtotal<span> </span> </div>
+
+                        }
+                        @* <div class="d-flex justify-content-between mb-2"> <span>Items @ViewBag.CountCart</span> <span> @ViewBag.sum</span> </div>*@
+                        <div class="d-flex justify-content-between">
+                            <span>Delivery <i class="fa fa-clock-o"></i></span>
+                            @if (ViewBag.sum >= 80000)
+                            {
+                                <span>Free</span>
+                            }
+                            else
+                            {
+                                <span>@ViewBag.DeliveryCharge</span>
+                            }
+
+                        </div>
+                    </div>
+                    <hr class="mt-0 line">
+                    <div class="p-3 d-flex justify-content-between">
+                        <div class="d-flex flex-column"> <span>Total you pay</span>@* <small>After 30 days $9.59</small>*@ </div> <span>₹@ViewBag.Grantotal</span>
+                    </div>
+                    <div class="p-3">
+                        @*<a asp-action="PlaceOrder"  asp-route-Radioaddress="@ViewBag.RadioAddress"><button class="btn btn-primary btn-block free-button">Place Order</button></a>*@
+                        @*                        <button class="btn btn-primary btn-block free-button">Place Order</button>
+                        *@                        <input type="submit" class="btn btn-primary btn-block free-button" value="Place Order" />
+
+                        @*   <div class="text-center"> <a href="#">Have a promo code?</a> </div>*@
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <div style=" margin-left: 15%; margin-top: -21px;" class="col-lg-9">
+        <h4>All closed</h4>
+        <hr style="margin-left:0%;width:94%" />
+        <div>
+            @* <a asp-action="MultiAddress" asp-controller="Customer"><button class="btn btn-primary" style="margin-bottom:20px;">Add Address</button></a>*@
+            <a asp-action="MultiAddress" asp-controller="Customer" class="btn btn-primary" style="margin-bottom:20px;">Add Address</a>
+        </div>
+
+
+        @foreach (var item in @ViewBag.AllAddress)
+        {
+            <div class="accordion col-md-8" id="accordionWithRadioExample" style="margin-left: -15px; width: 97%; max-width: 97.666667%!important; ">
+                <div class="card">
+
+
+
+                    <div class="form-check m-3">
+
+                        <input class="form-check-input" type="radio" name="AddressRadios" id="exampleRadios2" value="@item.AddressId">
+                        @*  @{
+                                ViewBag.RadioAddress = @item.AddressId;
+                            }*@
+                        <label class="form-check-label" for="exampleRadios2">
+                            <address>
+                                @item.FullName <br />
+                                @item.State , @item.Pincode , @item.Address , @item.Landmark<br />
+                                @item.Mobile
+                            </address>
+                            <a class="btn btn-danger" style="margin-bottom:20px;" asp-action="RemoveAddress" asp-controller="Customer" asp-route-id="@item.AddressId">Remove</a>
+                            <a class="btn btn-secondary" style="margin-bottom:20px;" asp-action="EditAddress" asp-controller="Customer" asp-route-id="@item.AddressId">Edit</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</form>
+
+
+

@@ -52,6 +52,10 @@ namespace WebgentalIdentity.Controllers
 
             var Productcount = _db.products.Count();
             ViewBag.Productcount = Productcount;
+
+            var Orderscount = _db.Orderss.Count();
+            ViewBag.Orderscount = Orderscount;
+
             return View();
         }
 
@@ -152,6 +156,7 @@ namespace WebgentalIdentity.Controllers
                     Pdetail = vm.Pdetail,
                     Pprice = vm.Pprice,
                     Cid = vm.Cid,
+                    Stock=vm.Stock,
                     ProfileImage = stringFileName
                 };
                 _db.products.Add(customer);
@@ -237,7 +242,7 @@ namespace WebgentalIdentity.Controllers
 
             }
 
-            if (prd.Pname == null || prd.Pdetail == null || prd.Pprice == null || prd.Cid == null)
+            if (prd.Pname == null || prd.Pdetail == null || prd.Pprice == null || prd.Cid == null||prd.Stock==null)
             {
                 ViewBag.status = false;
                 ViewBag.alertmesaage = "Product Updated Failed";
@@ -252,6 +257,7 @@ namespace WebgentalIdentity.Controllers
                     Pdetail = prd.Pdetail,
                     Pprice = prd.Pprice,
                     Cid = prd.Cid,
+                    Stock=prd.Stock,
                     ProfileImage = file
                 };
                 _db.products.Update(product);
@@ -385,8 +391,6 @@ namespace WebgentalIdentity.Controllers
             
         }
 
-
-
         //Users
 
 
@@ -419,7 +423,37 @@ namespace WebgentalIdentity.Controllers
 
 
 
+        //show Orders
 
+        public IActionResult ShowAllOrders()
+        {
+            return View(_db.Orderss.Include(x => x.Product).Include(x => x.addressModels).Include(x=>x.applicationUser).OrderByDescending(x=>x.Status).ToList());
+
+        }
+
+        public IActionResult UpdateStatus(int id,string status)
+        {
+            Orders orderupdate = _db.Orderss.Find(id);
+            if (orderupdate != null)
+            {
+                orderupdate.Status = status;
+                _db.Orderss.Update(orderupdate);
+                _db.SaveChanges();
+                return RedirectToAction("ShowAllOrders");
+            }
+            else
+            {
+                return RedirectToAction("ShowAllOrders");
+            }
+            
+        }
+
+        public IActionResult EditOrder(int id)
+        {
+            return View();
+        }
+
+        //show Orders
 
 
 

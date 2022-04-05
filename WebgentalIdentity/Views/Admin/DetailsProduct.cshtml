@@ -91,7 +91,7 @@
                             <p class="m-0 p-0">@Html.DisplayFor(model => model.Pname)</p>
                         </div>
                         <div class="col-lg-12">
-                            <p class="m-0 p-0 price-pro">$ @Html.DisplayFor(model => model.Pprice)</p>
+                            <p class="m-0 p-0 price-pro">₹ @Html.DisplayFor(model => model.Pprice)</p>
                             <hr class="p-0 m-0">
                         </div>
                         <div class="col-lg-12 pt-2">
@@ -99,9 +99,16 @@
                             <span>
                                 @Html.Raw(Model.Pdetail)
                             </span>
-                         
+
                         </div>
-                      
+                        <div class="col-lg-12 pt-2">
+                            <h5>Stock</h5>
+                            <span>
+                                  @Html.DisplayFor(model=>model.Stock)
+                            </span>
+
+                        </div>
+
                     </div>
                 </div>
             </div>

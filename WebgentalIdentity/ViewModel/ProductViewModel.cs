@@ -20,6 +20,7 @@ namespace WebgentalIdentity.ViewModel
         [Required]
         public int? Cid { get; set; }
         [Required]
+        public int? Stock { get; set; }
         public IFormFile ProfileImage { get; set; }
     }
 }

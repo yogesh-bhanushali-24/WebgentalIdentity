@@ -57,6 +57,15 @@
         background-color: #AB47BC !important
     }
 
+
+    .progress-bar-cancel {
+        background-color: #bc4747 !important
+    }
+
+    .progress-bar-delivered {
+        background-color: #53db0296 !important
+    }
+    
     .progress {
         height: 5px !important;
         margin-bottom: 0
@@ -104,7 +113,7 @@
         <div class="card-body">
             <div class="row justify-content-between mb-3">
                 <div class="col-auto">
-                    <h6 class="color-1 mb-0 change-color">Orders</h6>
+                    <h6 class="color-1 mb-0 change-color">@TempData["CancelStatus"]</h6>
                 </div>
                 @*<div class="col-auto "> <small>Receipt Voucher : 1KAU9-84UIL</small> </div>*@
             </div>
@@ -112,6 +121,7 @@
                 <div class="col">
 
                     <div class="card card-2">
+                     
                         @foreach (var item in Model)
                         {
                             <div class="card-body">
@@ -122,7 +132,7 @@
                                             <div class="col my-auto">
                                                 <h6 class="mb-0">@item.Product.Pname</h6>
                                             </div>
-                                            <div class="col-auto my-auto"> <small>Golden Rim </small></div>
+                                            <div class="col-auto my-auto"> <small>Date: @item.Date</small></div>
                                             <div class="col my-auto"> <small>Price :&#8377;@item.Product.Pprice</small></div>
                                             <div class="col my-auto"> <small>Qty : @item.Quantity</small></div>
                                             <div class="col my-auto"> <small>Status : @item.Status</small></div>
@@ -132,15 +142,85 @@
                                                 }
                                                 <h6 class="mb-0">&#8377;@subtotal</h6>
                                             </div>
+                                            @if (item.Status == "Pending")
+                                            {
+                                                <a class="btn btn-danger" asp-action="ChangeStatus" asp-controller="Customer" asp-route-status="@item.Status" asp-route-id="@item.OrderId" asp-route-Pid="@item.Pid" asp-route-qauntity="@item.Quantity">cancel</a>
+                                            }
+                                            else
+                                            { 
+                                            
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
                                 <hr class="my-3 ">
+
+                                <div id="accordion" style="margin-bottom:10px;">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-primary" style="background-color: #AB47BC !important" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Show Address
+                                                </button>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div class="card-body">
+
+                                                <ul>
+                                                    <li>
+                                                        @item.addressModels.FullName
+                                                    </li>
+                                                    <li>
+                                                        @item.addressModels.Mobile
+                                                    </li>
+
+                                                    <li>
+                                                        @item.addressModels.Address,@item.addressModels.Landmark
+                                                    </li>
+                                                    <li>
+                                                        @item.addressModels.Pincode,@item.addressModels.State
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
                                 <div class="row">
-                                  @*  <div class="col-md-3 mb-3"> <small> <span><i class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></small> </div>*@
+                                    @*  <div class="col-md-3 mb-3"> <small> <span><i class=" ml-2 fa fa-refresh" aria-hidden="true"></i></span></small> </div>*@
                                     <div class="col mt-auto">
                                         <div class="progress my-auto">
-                                            <div class="progress-bar progress-bar rounded" style="width: 20%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            @if (item.Status == "OutOfDelivery")
+                                            {
+                                                <div class="progress-bar progress-bar rounded" style="width: 70%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else if (item.Status == "Dispatch")
+                                            {
+                                                <div class="progress-bar progress-bar rounded" style="width: 35%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else if (item.Status == "Delivered")
+                                            {
+                                                <div class="progress-bar progress-bar-delivered rounded" style="width: 100%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else if (item.Status == "Cancel")
+                                            {
+                                                <div class="progress-bar progress-bar-cancel rounded" style="width: 100%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="progress-bar progress-bar rounded" style="width: 0%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+
+                                            }
                                         </div>
                                         <div class="media row justify-content-between ">
                                             <div class="col-auto text-right"><span> <small class="text-right mr-sm-2">Dispatch</small> <i class="fa fa-circle active"></i> </span></div>
@@ -199,11 +279,22 @@
                 </div>
             </div>
             <div class="row invoice ">
-                <div class="col">
-                    <p class="mb-1"> Invoice Number : 788152</p>
-                    <p class="mb-1">Invoice Date : 22 Dec,2019</p>
-                    <p class="mb-1">Recepits Voucher:18KU-62IIK</p>
-                </div>
+               
+                   @* <div class="col">
+                        <p class="mb-1">@item.Product.Pname</p>
+                        <p class="mb-1">@item.addressModels.FullName</p>
+                        <p class="mb-1">@item.addressModels.Mobile</p>
+                        <p class="mb-1">@item.addressModels.Pincode</p>
+                        <p class="mb-1">@item.addressModels.State</p>
+                        <p class="mb-1">@item.addressModels.Address</p>
+                    </div>*@
+                    @*<div class="col">
+                        <p class="mb-1"> Invoice Number : 788152</p>
+                        <p class="mb-1">Invoice Date : 22 Dec,2019</p>
+                        <p class="mb-1">Recepits Voucher:18KU-62IIK</p>
+                    </div>*@
+               
+
             </div>
         </div>
     @*    <div class="card-footer">

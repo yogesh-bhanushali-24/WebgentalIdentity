@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebgentalIdentity.Models;
 
 namespace WebgentalIdentity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220330063328_DirectOrder table")]
+    partial class DirectOrdertable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -364,15 +366,13 @@ namespace WebgentalIdentity.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("Pid");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orderss");
                 });
@@ -404,7 +404,7 @@ namespace WebgentalIdentity.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Stock")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Pid");
@@ -499,23 +499,12 @@ namespace WebgentalIdentity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebgentalIdentity.Models.ApplicationUser", "applicationUser")
-                        .WithMany("Orderss")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("addressModels");
-
-                    b.Navigation("applicationUser");
 
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebgentalIdentity.Models.AddressModel", b =>
-                {
-                    b.Navigation("Orderss");
-                });
-
-            modelBuilder.Entity("WebgentalIdentity.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Orderss");
                 });

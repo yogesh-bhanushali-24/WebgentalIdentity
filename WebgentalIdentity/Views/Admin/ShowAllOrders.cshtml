@@ -1,0 +1,108 @@
+﻿@model IEnumerable<WebgentalIdentity.Models.Orders>
+
+@{
+    ViewData["Title"] = "ShowAllOrders";
+    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+}
+
+<h1>ShowAllOrders</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Pname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Pprice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.addressModels.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.applicationUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                Total
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <form  asp-action="UpdateStatus" asp-route-id="@item.OrderId">
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    <a asp-action="DetailsProduct" asp-route-id="@item.Product.Pid" asp-route-cat="@item.Product.Cid">@Html.DisplayFor(modelItem => item.Product.Pname)</a>    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    ₹@Html.DisplayFor(modelItem => item.Product.Pprice)
+                </td>
+
+                <td>
+
+                    <select name="status" id="cars" asp-for="@item.Status" style="border:1px solid gray; padding:3px 14px; ">
+                        <option value="Pending">Pending</option>
+                        <option value="Dispatch">Dispatch</option>
+                        <option value="OutOfDelivery">Out For Delivery</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancel">Cancel</option>
+                    </select>
+
+
+                    </td>
+
+                <td>
+                    @Html.Raw(item.addressModels.Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.applicationUser.FirstName) @Html.DisplayFor(modelItem => item.applicationUser.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @{
+                        var subtotal = item.Product.Pprice * item.Quantity;
+                    }
+                    ₹@subtotal
+                </td>
+                <td>
+                    <input type="submit" value="Update" />
+                    <a asp-action="EditOrder" asp-route-id="@item.OrderId" class="btn btn-close-white btn-primary">Edit</a>
+
+                    @*  <a asp-action="UpdateStatus" asp-route-id="@item.OrderId">Update</a> |
+                         |
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>*@
+                </td>
+            </tr>
+            </form>
+        }
+    </tbody>
+    </table>
+  
+

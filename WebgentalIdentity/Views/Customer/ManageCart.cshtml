@@ -198,12 +198,13 @@
                             </div>
                             <div class="col-sm-2">
 
-                                <form asp-action="updatecart" asp-controller="Customer" asp-route-CartId="@item.CartId">
+                                <form asp-action="updatecart" asp-controller="Customer" asp-route-CartId="@item.CartId" asp-route-Pid="@item.Pid">
                                     <div class="quantity">
                                         <input type="number" value="@item.Qauntity_Cart" min="1" max="10" class="quantity-field" name="itemQauntity">
                                     </div>
                                     <div>
                                         <input type="submit" value="Update" />
+
                                     </div>
                                 </form>
                             </div>
@@ -220,7 +221,7 @@
 
                             </div>
 
-
+                            @TempData["Stock"]
                         </div>
                     </div>
 

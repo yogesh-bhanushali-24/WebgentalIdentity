@@ -1,16 +1,14 @@
 ﻿@model WebgentalIdentity.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "AdminEdit";
-    Layout = "~/Views/Shared/_AdminDashboard.cshtml";
+    ViewData["Title"] = "CustomerEdit";
+    Layout = "~/Views/Shared/_CustomerSettings.cshtml";
 }
 
-<h1>AdminEdit</h1>
-
-<hr />
+<h1>CustomerEdit</h1>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AdminEdit">
+        <form asp-action="CustomerEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -40,7 +38,4 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
